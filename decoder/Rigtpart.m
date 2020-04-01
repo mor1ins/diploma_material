@@ -44,4 +44,4 @@ end
 pymean = mean(py);
 ratio2_exp = (pymean(2) - pymean(1)) / (pymean(3) - pymean(1));
 % Plot the intensity histogram
-histo = bar(n)
+histo = bar(n);

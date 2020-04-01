@@ -10,7 +10,6 @@ function X = DetCor(A, B)
         a(2, i) = mod(A(2) + i - 1, 233);
         a(3, i) = mod(A(3) + i - 1, 31);
         a(4, i) = mod(A(4) + i - 1, 241);
-     
     end
     % output the result.
     flag = 0;

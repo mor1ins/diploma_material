@@ -39,7 +39,6 @@ function [a1, a2, a3, a4] = PDScoeff(PDS)
                 a3(i, j) = 8;
                 a4(i, j) = 8;
             end
-         
         end
     end
  

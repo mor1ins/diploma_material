@@ -5,15 +5,16 @@
 % clean up the work space
 clc; clear all;
 disp('Running centroids.m...'); % Message sent to command window.
-  [FileName, PathName] = uigetfile({'*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images
-(* .bmp, * .tif, * .jpg, * .gif, * .png)';
-'*.bmp', 'BMP Image(*.bmp)'; ...
-  '*.tif', 'Tiff Image(*.tif)'; ...
-  '*.jpg', 'JPEG Image (*.jpg)'; ...
-  '*.gif', 'GIF (*.gif)'; ...
-  '*.png', 'PNG (*.png)'; ...
-  '*.*', 'All Files (*.*)'}, ...
-  'Select an Image');
+  [FileName, PathName] = uigetfile({
+          '*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images(* .bmp, * .tif, * .jpg, * .gif, * .png)';
+          '*.bmp', 'BMP Image(*.bmp)'; ...
+          '*.tif', 'Tiff Image(*.tif)'; ...
+          '*.jpg', 'JPEG Image (*.jpg)'; ...
+          '*.gif', 'GIF (*.gif)'; ...
+          '*.png', 'PNG (*.png)'; ...
+          '*.*', 'All Files (*.*)'
+      }, ...
+      'Select an Image');
 if isequal(FileName, 0)
     disp('User selected Cancel')
 else
@@ -59,7 +60,7 @@ end
 for i = 1:N
     for j = 1:N
         if abs(recX(j, i)) + abs(recY(j, i)) ~= 1
-            if abs(x(j, i) - averx(i)) > abs(y(j, i) - avery(j));
+            if abs(x(j, i) - averx(i)) > abs(y(j, i) - avery(j))
                 recY(j, i) = 0;
                 recX(j, i) = sign(x(j, i) - averx(i));
             else
@@ -169,4 +170,4 @@ Y = DetCor(Ay, By);
 % obtain the coordinates in columns and rows of the object.
 objectC = X + objectC - 1;
 objectR = Y + objectR - 1;
-Coordinate = [objectC, objectR]
+Coordinate = [objectC, objectR];

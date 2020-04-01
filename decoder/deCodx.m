@@ -34,8 +34,8 @@ function [PosVal, DS] = deCodx(code, BitSeq, n)
                 [r8, c8] = size(code8);
                 for j = 1:r8
                     bla(i, 1 + (j - 1) * c8:j * c8) = code8(j, :);
+                end
             end
-        end
      
         case 6
           for i = 1: r_codeT
@@ -53,37 +53,35 @@ function [PosVal, DS] = deCodx(code, BitSeq, n)
                 bla(:, 1 + (i - 1) * c5:i * c5) = code5;
              
             end
-         
-        end
-        bla = char(bla);
-        for i = 1:r_codeT
-            for j = 1:c_codeT
-                for k = 1:length(BitSeq)
-                    if isequal(bla(i, 1 + (j - 1) * n + 2 * (n - 1) * (j - 1):j * n + 2 * (n - 1) * j), BitSeq{k})
-                        PosVal(i, j) = k - 1;
-                    end
+    end
+    bla = char(bla);
+    for i = 1:r_codeT
+        for j = 1:c_codeT
+            for k = 1:length(BitSeq)
+                if isequal(bla(i, 1 + (j - 1) * n + 2 * (n - 1) * (j - 1):j * n + 2 * (n - 1) * j), BitSeq{k})
+                    PosVal(i, j) = k - 1;
                 end
             end
         end
-        switch n
-            case 6
-                for i = 1:r_codeT
-                    for j = 1:c_codeT - 1
-                        DS(i, j) = mod((PosVal(i, j + 1) - PosVal(i, j)), 63);
-                     
-                    end
+    end
+    switch n
+        case 6
+            for i = 1:r_codeT
+                for j = 1:c_codeT - 1
+                    DS(i, j) = mod((PosVal(i, j + 1) - PosVal(i, j)), 63);
+
                 end
-         
-            case 8
-              for i = 1:r_codeT
-                  for j = 1:c_codeT - 1
-                      DS(i, j) = mod((PosVal(i, j + 1) - PosVal(i, j)), 63);
-                   
-                  end
+            end
+
+        case 8
+          for i = 1:r_codeT
+              for j = 1:c_codeT - 1
+                  DS(i, j) = mod((PosVal(i, j + 1) - PosVal(i, j)), 63);
+
               end
-           
-            otherwise
-              DS = [];
-         end
-       
-       
+          end
+
+        otherwise
+          DS = [];
+    end
+

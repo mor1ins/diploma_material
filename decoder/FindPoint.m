@@ -17,14 +17,15 @@ Point{3} = subfun(id3, x, y, xy0);
 % 4th quadrant
 id4 = (x >= 0 & y < 0);
 Point{4} = subfun(id4, x, y, xy0);
-function xyPoint = subfun(id, x, y, xy0) % find the nearest point xyPoint = [];
+
+function xyPoint = subfun(id,x,y,xy0) % find the nearest point
+    xyPoint = [];
     x1 = x(id);
-    if ~ isempty(x1)
+    if ~isempty(x1)
         y1 = y(id);
-        distance = x1 .^ 2 + y1 .^ 2;
-        xy0_1 = xy0(id, :);
-        xyPoint = xy0_1(find(distance == min(distance)), :);
+        distance = x1.^2 + y1.^2;
+        xy0_1 = xy0(id,:);
+        xyPoint = xy0_1(find(distance == min(distance)),:);
     end
-    90
- 
+end
  

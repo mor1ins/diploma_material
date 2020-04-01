@@ -35,7 +35,7 @@ function [PosVal, DS] = deCody(code, BitSeq, n)
              
                 bla(:, 1 + (i - 1) * c8:i * c8) = code8;
              
-        end
+            end
      
         case 6
           for i = 1: c_codeT
@@ -72,8 +72,8 @@ function [PosVal, DS] = deCody(code, BitSeq, n)
                     for j = 1:c_codeT
                         DS(i, j) = mod((PosVal(i + 1, j) - PosVal(i, j)), 63);
                         % DS(i,j) = mod(abs((PosVal(i,j+1)-PosVal(i,j))),63);
+                    end
                 end
-            end
          
             case 6
               for i = 1:r_codeT - 1
@@ -84,6 +84,6 @@ function [PosVal, DS] = deCody(code, BitSeq, n)
               end
             otherwise
               DS = [];
-          end
+        end
        
        

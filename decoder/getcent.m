@@ -1,5 +1,8 @@
 % Title: getcent.m
+%
 % [X,Y] = getcent find the centroid coordinates in pixels for the object.
+
+
 function [X, Y] = getcent
     clc; clear all;
     disp('Running program, please wait...'); % Message sent to command window.
@@ -20,7 +23,7 @@ function [X, Y] = getcent
     else
         FullFileName = fullfile(PathName, FileName);
     end
-    
+
     OI3 = imread(FullFileName);
     OI3 = flipud(OI3);
     figure
@@ -34,11 +37,11 @@ function [X, Y] = getcent
             yt(m, n) = centroids(m + (n - 1) * N, 2);
         end
     end
- 
+
     [temp, index] = sort(yt, 'descend');
     % create y matrix
     y = temp;
- 
+
     % create x matrix
     x = zeros(N);
     for m = 1:N
@@ -46,8 +49,6 @@ function [X, Y] = getcent
             x(n, m) = xt(index(n, m), m);
         end
     end
- 
+
     X = x;
     Y = y;
- 
- 

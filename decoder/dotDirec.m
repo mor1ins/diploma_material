@@ -1,13 +1,17 @@
 % Title: dotDirec.m
+%
 % [recX,recY,xSpace,ySpace] = dotDirec(x,y) analyzes the x-coordinates and
-% y-coordinates of the centroids and assign offset direction indicators recX and % recY to each dot. xSpace and ySpace are two arrays used to record the spacings % of the columns and rows respectively.
+% y-coordinates of the centroids and assign offset direction indicators recX and
+% recY to each dot. xSpace and ySpace are two arrays used to record the spacings
+% of the columns and rows respectively.
+
 function [recX, recY, xSpace, ySpace] = dotDirec(x, y) 
     [N, M] = size(x);
     recX = zeros([N, M]);
     recY = recX;
-    xSpace = zeros(1, M); ySpace = zeros(N, 1); xt1 = zeros(1, M); xt2 = zeros(1, M); 
+    xSpace = zeros(1, M); ySpace = zeros(N, 1); xt1 = zeros(1, M); xt2 = zeros(1, M);
     yt1 = zeros(N, 1); yt2 = zeros(N, 1);
-    
+
     for i = 1:M
         xt1(i) = min(x(:, i));
         xt2(i) = max(x(:, i)); xSpace(i) = xt2(i) - xt1(i);

@@ -1,8 +1,11 @@
 % Title: GetCentroids.m
+%
 % [numofBlobs, centroids] = GetCentroids(OI) uses binary image information
 % contained in OI to determine the number of blobs, numofBlobs in the original
 % image, locate the coordinates (pixels) of the centroids of each blob and save
 % them in a array called centroids.
+
+
 function [numofBlobs, centroids] = GetCentroids(OI)
     % Maximize the figure window.
     set(gcf, 'Position', get(0, 'ScreenSize'));
@@ -22,4 +25,3 @@ function [numofBlobs, centroids] = GetCentroids(OI)
     % hold on
     plot(centroids(:, 1), centroids(:, 2), '.'); axis square
     % hold off
- 

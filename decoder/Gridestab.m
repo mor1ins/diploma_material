@@ -1,6 +1,9 @@
 % Title: Gridestab.m
-% [averx,avery,~,~] = Gridestab(recX,recY,x,y)reconstructs the virtual raster lines
-% and returns the coordinates averx and avery of the raster lines.
+%
+% [averx,avery,~,~] = Gridestab(recX,recY,x,y) reconstructs the virtual raster
+% lines and returns the coordinates averx and avery of the raster lines.
+
+
 function [averx, avery, deltax, deltay] = Gridestab(recX, recY, x, y)
     plot(x(:, :), y(:, :), 'r*'); axis square
     hh = axis;

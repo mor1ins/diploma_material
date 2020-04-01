@@ -1,7 +1,9 @@
 % Title: DetCor.m
+%
 % X = DetCor(A,B) determines the coordinates of the dots in columns and rows.
 % A = (p1r,p2r,p3r,p4r) is the reference unique 4-number combination.
 % B = (p1,p2,p3,p4) is the 4-number combination of the interested region.
+
 function X = DetCor(A, B)
     a = zeros(4, 1000);
     % establish a table
@@ -23,5 +25,3 @@ function X = DetCor(A, B)
         disp('no match found')
         X = 0;
     end
- 
- 

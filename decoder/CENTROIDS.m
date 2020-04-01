@@ -1,9 +1,13 @@
 % Title: CENTROIDS.m
+%
 % CENTROIDS is the main script.
 % It calls a number of functions to do incline-correction reconstruct the virtual
 % raster lines and decoding.
 % clean up the work space
-clc; clear all;
+
+
+clc;
+clear all;
 disp('Running centroids.m...'); % Message sent to command window.
   [FileName, PathName] = uigetfile({
           '*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images(* .bmp, * .tif, * .jpg, * .gif, * .png)';
@@ -20,8 +24,10 @@ if isequal(FileName, 0)
 else
     FullFileName = fullfile(PathName, FileName);
 end
+
 OI = imread(FullFileName);
 OI = flipud(OI);
+
 figure
 % imshow(OI);
 [numofBlobs, centroids] = GetCentroids(OI);
@@ -70,8 +76,10 @@ for i = 1:N
         end
     end
 end
+
 MarkVal_x = zeros(N);
 MarkVal_y = zeros(N);
+
 % calculate the mark value
 for i = 1:N ^ 2
     if recX(i) == - 1 && recY(i) == 0
@@ -83,7 +91,7 @@ for i = 1:N ^ 2
     elseif recX(i) == 0 && recY(i) == 1
         MarkVal_y(i) = 2;
     else
-     
+
     end
 end
 MarkVal = MarkVal_x + MarkVal_y;
@@ -92,7 +100,6 @@ xcode = zeros(N); ycode = zeros(N);
 for j = 1:N
     for i = 1:N
         switch MarkVal(j, i)
-         
             case 1
                 xcode(j, i) = 0;
                 ycode(j, i) = 1;
@@ -111,8 +118,8 @@ for j = 1:N
                 ycode(j, i) = 3;
         end
     end
- 
 end
+
 % find the pixel coordinates of the centroid of the object
 [objectX, objectY] = getcent
 objectR = 0;
@@ -127,12 +134,14 @@ for j = 1:N - 1
         objectR = j + (objectY - avery(j)) / (avery(j + 1) - avery(j));
     end
 end
+
 % establish the code book as a reference for decoding
 BitSeq = enCod(0, 6);
 PaSeq_1SDS = enCod(1, 5);
 PaSeq_2SDS = enCod(2, 5);
 PaSeq_3SDS = enCod(3, 5);
 PaSeq_4SDS = enCod(4, 5);
+
 % decoding..
 % obtain the PDS
 [PVy, PDSy] = deCody(ycode, BitSeq, 6);
@@ -152,6 +161,7 @@ PaSeq_4SDS = enCod(4, 5);
 [p2y, ~] = deCody(a2y, PaSeq_2SDS, 5);
 [p3y, ~] = deCody(a3y, PaSeq_3SDS, 5);
 [p4y, ~] = deCody(a4y, PaSeq_4SDS, 5);
+
 % obtain the place numbers in PDS if needed
 % Px = Place_PDS(xcode,1);
 % Py = Place_PDS(ycode,2);

@@ -1,11 +1,15 @@
 % Script: Rigtpart.m
+%
 % Purpose: process the right part of an experimental image to obtain the exact
 % ratio, ratio2_exp, of the distances A and B.
 % A is the distance between the point on the thimble which coincides with the axial
 % line to the lower graduation.
 % B is the distance between the lower graduation and the higher graduation.
-% Input: ‘*****.jpg’ – the experimental image.
-% Output: ratio2_exp -- the ratio as describe above.
+%
+% Input:        ‘*****.jpg’ – the experimental image.
+% Output:       ratio2_exp -- the ratio as describe above.
+
+
 clc; clear all;
 BW = imread('25973.jpg'); % A typical experimental image
 [r, c] = size(BW);

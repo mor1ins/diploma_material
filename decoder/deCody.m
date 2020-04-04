@@ -56,35 +56,35 @@ function [PosVal, DS] = deCody(code, BitSeq, n)
                 end
             end
 
-        end
-        bla = char(bla);
-        for i = 1:r_codeT
-            for j = 1:c_codeT
-                for k = 1:length(BitSeq)
-                    if isequal(bla(i, 1 + (j - 1) * n + 2 * (n - 1) * (j - 1):j * n + 2 * (n - 1) * j), BitSeq{k})
-                        PosVal(i, j) = k - 1;
-                    end
+    end
+    bla = char(bla);
+    for i = 1:r_codeT
+        for j = 1:c_codeT
+            for k = 1:length(BitSeq)
+                if isequal(bla(i, 1 + (j - 1) * n + 2 * (n - 1) * (j - 1):j * n + 2 * (n - 1) * j), BitSeq{k})
+                    PosVal(i, j) = k - 1;
                 end
             end
         end
-        switch n
-            case 8
-                for i = 1:r_codeT - 1
-                    for j = 1:c_codeT
-                        DS(i, j) = mod((PosVal(i + 1, j) - PosVal(i, j)), 63);
-                        % DS(i,j) = mod(abs((PosVal(i,j+1)-PosVal(i,j))),63);
-                    end
+    end
+    switch n
+        case 8
+            for i = 1:r_codeT - 1
+                for j = 1:c_codeT
+                    DS(i, j) = mod((PosVal(i + 1, j) - PosVal(i, j)), 63);
+                    % DS(i,j) = mod(abs((PosVal(i,j+1)-PosVal(i,j))),63);
                 end
+            end
 
-            case 6
-              for i = 1:r_codeT - 1
-                  for j = 1:c_codeT
-                      DS(i, j) = mod((PosVal(i + 1, j) - PosVal(i, j)), 63);
-                      % DS(i,j) = mod(abs((PosVal(i,j+1)-PosVal(i,j))),63);
-                  end
+        case 6
+          for i = 1:r_codeT - 1
+              for j = 1:c_codeT
+                  DS(i, j) = mod((PosVal(i + 1, j) - PosVal(i, j)), 63);
+                  % DS(i,j) = mod(abs((PosVal(i,j+1)-PosVal(i,j))),63);
               end
-            otherwise
-              DS = [];
-        end
+          end
+        otherwise
+          DS = [];
+    end
 
        

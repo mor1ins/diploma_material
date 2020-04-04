@@ -20,8 +20,9 @@ function [numofBlobs, centroids] = GetCentroids(OI)
     centroids = cat(1, blobMeasurements.Centroid);
     % Plot the centroids on the binary image
     % imagesc(BW); colormap(gray(256)); title('Centroids of each blob'); axis square;
-    imshow(BW)
+    % imshow(BW)
     [~, numofBlobs] = bwlabel(BW, 8);
     % hold on
-    plot(centroids(:, 1), centroids(:, 2), '.'); axis square
+    plot(centroids(:, 1), centroids(:, 2), '.'); 
+    axis square
     % hold off

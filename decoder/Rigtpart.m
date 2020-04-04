@@ -11,7 +11,25 @@
 
 
 clc; clear all;
-BW = imread('25973.jpg'); % A typical experimental image
+
+[FileName, PathName] = uigetfile({
+      '*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images(* .bmp, * .tif, * .jpg, * .gif, * .png)';
+      '*.bmp', 'BMP Image(*.bmp)'; ...
+      '*.tif', 'Tiff Image(*.tif)'; ...
+      '*.jpg', 'JPEG Image (*.jpg)'; ...
+      '*.gif', 'GIF (*.gif)'; ...
+      '*.png', 'PNG (*.png)'; ...
+      '*.*', 'All Files (*.*)'
+  }, ...
+  'Select an Image');
+if isequal(FileName, 0)
+    disp('User selected Cancel')
+else
+    FullFileName = fullfile(PathName, FileName);
+end
+
+BW = imread(FullFileName);
+% BW = imread('25973.jpg'); % A typical experimental image
 [r, c] = size(BW);
 BW = BW > 100;
 [n, ~] = hist(BW);

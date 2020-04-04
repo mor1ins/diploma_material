@@ -25,7 +25,9 @@ function [X, Y] = getcent
     end
 
     OI3 = imread(FullFileName);
+    OI3 = rgb2gray(OI3);
     OI3 = flipud(OI3);
+    
     figure
     [numofBlobs, centroids] = GetCentroids(OI3);
     N = sqrt(numofBlobs);

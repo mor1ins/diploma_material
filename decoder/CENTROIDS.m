@@ -9,16 +9,16 @@
 clc;
 clear all;
 disp('Running centroids.m...'); % Message sent to command window.
-  [FileName, PathName] = uigetfile({
-          '*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images(* .bmp, * .tif, * .jpg, * .gif, * .png)';
-          '*.bmp', 'BMP Image(*.bmp)'; ...
-          '*.tif', 'Tiff Image(*.tif)'; ...
-          '*.jpg', 'JPEG Image (*.jpg)'; ...
-          '*.gif', 'GIF (*.gif)'; ...
-          '*.png', 'PNG (*.png)'; ...
-          '*.*', 'All Files (*.*)'
-      }, ...
-      'Select an Image');
+[FileName, PathName] = uigetfile({
+      '*.bmp;*.tif;*.jpg;*.gif;*.png', 'Images(* .bmp, * .tif, * .jpg, * .gif, * .png)';
+      '*.bmp', 'BMP Image(*.bmp)'; ...
+      '*.tif', 'Tiff Image(*.tif)'; ...
+      '*.jpg', 'JPEG Image (*.jpg)'; ...
+      '*.gif', 'GIF (*.gif)'; ...
+      '*.png', 'PNG (*.png)'; ...
+      '*.*', 'All Files (*.*)'
+  }, ...
+  'Select an Image');
 if isequal(FileName, 0)
     disp('User selected Cancel')
 else
@@ -26,6 +26,7 @@ else
 end
 
 OI = imread(FullFileName);
+OI = rgb2gray(OI);
 OI = flipud(OI);
 
 figure
@@ -121,7 +122,7 @@ for j = 1:N
 end
 
 % find the pixel coordinates of the centroid of the object
-[objectX, objectY] = getcent
+[objectX, objectY] = getcent;
 objectR = 0;
 objectC = 0;
 for i = 1:N - 1

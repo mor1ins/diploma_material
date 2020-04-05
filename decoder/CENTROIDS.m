@@ -126,12 +126,12 @@ end
 objectR = 0;
 objectC = 0;
 for i = 1:N - 1
-    if objectX >= averx(i) && objectX <= averx(i + 1)
+    if objectX >= averx(i) & objectX <= averx(i + 1)
         objectC = i + (objectX - averx(i)) / (averx(i + 1) - averx(i));
     end
 end
 for j = 1:N - 1
-    if objectY <= avery(j) && objectY >= avery(j + 1)
+    if objectY <= avery(j) & objectY >= avery(j + 1)
         objectR = j + (objectY - avery(j)) / (avery(j + 1) - avery(j));
     end
 end

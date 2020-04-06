@@ -44,11 +44,7 @@
 
 
 
-<img src="img/clip_image010.jpg" alt="img" style="zoom: 200%;" />
-
- 																**(a)**                             **(b)**
-
- **Пример изображения с однопиксельными точками (a) и оно же после FFT (b)**
+<img src="img/clip_image010.jpg" alt="img" style="zoom: 200%;" />**Пример изображения (a) с однопиксельными точками  и оно же после FFT (b)**
 
 
 
@@ -85,7 +81,7 @@
 
 ![img](img/clip_image011.jpg)
 
-​								 **Подготовленное для декодирования изображение**
+​                                 **Подготовленное для декодирования изображение**
 
 
 
@@ -97,9 +93,7 @@
 
 ![img](img/clip_image013.jpg)
 
- 		                  	**Использование FFT для выравнивания изображения**
-
-
+​                                **Использование FFT для выравнивания изображения**
 
 Поскольку 9-точечный параллелограмм состоит из 4 меньших параллелограммов, для простоты можно взглянуть на них. В соответствии с геометрическими соотношениями этих точек расчеты производятся следующим образом:
 
@@ -422,8 +416,6 @@ $$
 
 
 ![img](img/clip_image028.jpg)
-
-​																	(a)                    (b)                     (c)
 
 **Figure 5-11 (a) the preprocessed image of the region of interest, with the object (the circle) at its starting position (b) the known dot pattern of the background, which will provide the position of the region (c) extracted from (a), which is a binary image of the object with the position relation unchanged from (a). 60****×** **magnification.**
 

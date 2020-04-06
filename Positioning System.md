@@ -206,7 +206,7 @@ $$
 
 (a) в направлении X
 
-![img](file:////Users/mor1ins/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image017.jpg)
+![img](img/clip_image017.jpg)
 
 (b) в направлении Y
 

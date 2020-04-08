@@ -22,21 +22,26 @@ else
     FullFileName = fullfile(PathName, FileName);
 end
 OI = imread(FullFileName);
+OI = rgb2gray(OI);
 imshow(OI);
-[numofBlobs, centroids] = GetCentroids(OI);
+[numofBlobs, centroids] = GetCentroids(OI, 2);
 
 xy = [centroids(round(numofBlobs / 2), 1), centroids(round(numofBlobs / 2), 2)];
-P = FindPoint(centroids, xy);
+% P = FindPoint(centroids, xy);
+P = [ 
+    centroids(1, 1), centroids(1, 2);
+    centroids(2, 1), centroids(2, 2);
+    centroids(4, 1), centroids(4, 2);
+    centroids(5, 1), centroids(5, 2);
+];
 alphaSum = 0;
 for i = 1:4
-    temp = P{i} - xy;
+    temp = P(i) - xy;
     d = sqrt(temp(1) ^ 2 + temp(2) ^ 2);
     if temp(1) / d ~= 0 && temp(2) / d ~= 0
         if mod(i, 2) == 0
-            asin(abs(temp(2)) / d)
             alpha = asin(abs(temp(2)) / d);
         else
-            asin(abs(temp(2)) / d)
             alpha = pi / 2 - asin(abs(temp(2)) / d);
         end
         alphaSum = alphaSum + alpha;

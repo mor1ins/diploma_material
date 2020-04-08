@@ -6,11 +6,11 @@
 % them in a array called centroids.
 
 
-function [numofBlobs, centroids] = GetCentroids(OI)
+function [numofBlobs, centroids] = GetCentroids(OI, thres)
     % Maximize the figure window.
     set(gcf, 'Position', get(0, 'ScreenSize'));
     % Thresholding the image
-    thres = 100; % Set a threshold value for binarize the image
+    % thres = 2; % Set a threshold value for binarize the image
     % BW = OI < thres; % Store the obtained binary image into an array 'BW'
     BW = OI > thres;
     % Find the coordinates of centroids of each blob

@@ -31,7 +31,7 @@ OI = flipud(OI);
 
 figure
 % imshow(OI);
-[numofBlobs, centroids] = GetCentroids(OI);
+[numofBlobs, centroids] = GetCentroids(OI, 100);
 % }
 
 % Since centroids is a N×2 array, it's not easy and instinct to utilize

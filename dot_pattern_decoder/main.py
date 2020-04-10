@@ -1,95 +1,14 @@
-import time
-
 import numpy as np
-
-
-def sequence_p(start, step):
-    while True:
-        yield start
-        start += step
-
-
-def transpose(matrix):
-    return [list(matrix[:, row]) for row in range(len(matrix))]
-
-
-def find(sequence, subsequence):
-    # print(subsequence)
-    sequence_copy = sequence.copy()
-    sequence_str = ''.join(map(lambda el: str(el), sequence_copy))
-    # print(sequence_str)
-    subsequence_str = ''.join(map(lambda el: str(el), subsequence))
-    result = sequence_str.find(subsequence_str)
-    if result == -1:
-        middle = int(len(sequence_str) / 2)
-        sequence_copy[:middle], sequence_copy[middle + 1:] = sequence_copy[middle:], sequence_copy[:middle]
-        sequence_str = ''.join(map(lambda el: str(el), sequence_copy))
-        result = sequence_str.find(subsequence_str)
-        # print(sequence_str)
-
-    return result
+import constants
+from helpers import sequence_p, transpose, find
 
 
 class DotPatternDecoder:
-    MNS = [
-        0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-        1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
-        0, 0, 0, 1, 1, 1, 0, 1, 1, 1,
-        0, 0, 1, 0, 1, 0, 1, 0, 0, 0,
-        1, 0, 1, 1, 0, 1, 1, 0, 0, 1,
-        1, 0, 1, 0, 1, 1, 1, 1, 0, 0,
-        0, 1, 1
-    ]
-
-    A_1 = [
-        0, 0, 0, 0, 0, 1, 0, 0, 0, 0,   2, 0, 1, 0, 0, 1, 0, 1, 0, 0,
-        2, 0, 0, 0, 1, 1, 0, 0, 0, 1,   2, 0, 0, 1, 0, 2, 0, 0, 2, 0,
-        2, 0, 1, 1, 0, 1, 0, 1, 1, 0,   2, 0, 1, 2, 0, 1, 0, 1, 2, 0,
-        2, 1, 0, 0, 1, 1, 1, 0, 1, 1,   1, 1, 0, 2, 1, 0, 1, 0, 2, 1,
-        1, 0, 0, 1, 2, 1, 0, 1, 1, 2,   0, 0, 0, 2, 1, 0, 2, 0, 2, 1,
-        1, 1, 0, 0, 2, 1, 2, 0, 1, 1,   1, 2, 0, 2, 0, 0, 1, 1, 2, 1,
-        0, 0, 0, 2, 2, 0, 1, 0, 2, 2,   0, 0, 1, 2, 2, 0, 2, 0, 2, 2,
-        1, 0, 1, 2, 1, 2, 1, 0, 2, 1,   2, 1, 1, 0, 2, 2, 1, 2, 1, 2,
-        0, 2, 2, 0, 2, 2, 2, 0, 1, 1,   2, 2, 1, 1, 0, 1, 2, 2, 2, 2,
-        1, 2, 0, 0, 2, 2, 1, 1, 2, 1,   2, 2, 1, 0, 2, 2, 2, 2, 2, 0,
-        2, 1, 2, 2, 2, 1, 1, 1, 2, 1,   1, 2, 0, 1, 2, 2, 1, 2, 2, 0,
-        1, 2, 1, 1, 1, 1, 2, 2, 2, 0,   0, 2, 1, 1, 2, 2
-    ]
-
-    A_2 = [
-        0, 0, 0, 0, 0, 1, 0, 0, 0, 0,   2, 0, 1, 0, 0, 1, 0, 1, 0, 1,
-        1, 0, 0, 0, 1, 1, 1, 1, 0, 0,   1, 1, 0, 1, 0, 0, 2, 0, 0, 0,
-        1, 2, 0, 1, 0, 1, 2, 1, 0, 0,   0, 2, 1, 1, 1, 0, 1, 1, 1, 0,
-        2, 1, 0, 0, 1, 2, 1, 2, 1, 0,   1, 0, 2, 0, 1, 1, 0, 2, 0, 0,
-        1, 0, 2, 1, 2, 0, 0, 0, 2, 2,   0, 0, 1, 1, 2, 0, 2, 0, 0, 2,
-        0, 2, 0, 1, 2, 0, 0, 2, 2, 1,   1, 0, 0, 2, 1, 0, 1, 1, 2, 1,
-        0, 2, 0, 2, 2, 1, 0, 0, 2, 2,   2, 1, 0, 1, 2, 2, 0, 0, 2, 1,
-        2, 2, 1, 1, 1, 1, 1, 2, 0, 0,   1, 2, 2, 1, 2, 0, 1, 1, 1, 2,
-        1, 1, 2, 0, 1, 2, 1, 1, 1, 2,   2, 0, 2, 2, 0, 1, 1, 2, 2, 2,
-        2, 1, 2, 1, 2, 2, 0, 1, 2, 2,   2, 0, 2, 0, 2, 1, 1, 2, 2, 1,
-        0, 2, 2, 0, 2, 1, 0, 2, 1, 1,   0, 2, 2, 2, 2, 0, 1, 0, 2, 2,
-        1, 2, 2, 2, 1, 1, 2, 1, 2, 0,   2, 2, 2,
-    ]
-
-    A_3 = [
-        0, 0, 0, 0, 0, 1, 0, 0, 1, 1,   0, 0, 0, 1, 1, 1, 1, 0, 0, 1,
-        0, 1, 0, 1, 1, 0, 1, 1, 1, 0,   1
-    ]
-
-    A_4 = [
-        0, 0, 0, 0, 0, 1, 0, 2, 0, 0,   0, 0, 2, 0, 0, 2, 0, 1, 0, 0,
-        0, 1, 1, 2, 0, 0, 0, 1, 2, 0,   0, 2, 1, 0, 0, 0, 2, 1, 1, 2,
-        0, 1, 0, 1, 0, 0, 1, 2, 1, 0,   0, 1, 0, 0, 2, 2, 0, 0, 0, 2,
-        2, 1, 0, 2, 0, 1, 1, 0, 0, 1,   1, 1, 0, 1, 0, 1, 1, 0, 1, 2,
-        0, 1, 1, 1, 1, 0, 0, 2, 0, 2,   0, 1, 2, 0, 2, 2, 0, 1, 0, 2,
-        1, 0, 1, 2, 1, 1, 0, 1, 1, 1,   2, 2, 0, 0, 1, 0, 1, 2, 2, 2,
-        0, 0, 2, 2, 2, 0, 1, 2, 1, 2,   0, 2, 0, 0, 1, 2, 2, 0, 1, 1,
-        2, 1, 0, 2, 1, 1, 0, 2, 0, 2,   1, 2, 0, 0, 1, 1, 0, 2, 1, 2,
-        1, 0, 1, 0, 2, 2, 0, 2, 1, 0,   2, 2, 1, 1, 1, 2, 0, 2, 1, 1,
-        1, 0, 2, 2, 2, 2, 0, 2, 0, 2,   2, 1, 2, 1, 1, 1, 1, 2, 1, 2,
-        1, 2, 2, 2, 1, 0, 0, 2, 1, 2,   2, 1, 0, 1, 1, 2, 2, 1, 1, 2,
-        1, 2, 2, 2, 2, 1, 2, 0, 1, 2,   2, 1, 2, 2, 0, 2, 2, 2, 1, 1
-    ]
+    MNS = constants.MNS
+    A_1 = constants.A_1
+    A_2 = constants.A_2
+    A_3 = constants.A_3
+    A_4 = constants.A_4
 
     def __init__(self):
         pass
@@ -99,14 +18,9 @@ class DotPatternDecoder:
 
     @staticmethod
     def dir2pos(x, y):
-        translations = [
-            ((-1, 0), (1, 0)),
-            ((1, 0), (0, 1)),
-            ((0, 1), (0, 0)),
-            ((0, -1), (1, 1)),
-        ]
-        for dir, pos in translations:
-            if dir[0] == x and dir[1] == y:
+        translations = constants.DIRECTIONS_TO_BITS_TRANSLATIONS
+        for direction, pos in translations.values():
+            if direction == (x, y):
                 return pos
 
     @staticmethod
@@ -117,7 +31,6 @@ class DotPatternDecoder:
             for j in range(len(x_direction[i])):
                 x_position[i, j], y_position[i, j] = DotPatternDecoder.dir2pos(x_direction[i, j], y_direction[i, j])
                 # print(f'({x_direction[i, j]}, {y_direction[i, j]}) -> ({x_position[i, j]}, {y_position[i, j]})')
-
         return x_position, y_position
 
     @staticmethod
@@ -158,10 +71,8 @@ class DotPatternDecoder:
     @staticmethod
     def find_positions_in_sds(sds):
         return (
-            find(DotPatternDecoder.A_1, sds[0]),
-            find(DotPatternDecoder.A_2, sds[1]),
-            find(DotPatternDecoder.A_3, sds[2]),
-            find(DotPatternDecoder.A_4, sds[3]),
+            find(DotPatternDecoder.A_1, sds[0]), find(DotPatternDecoder.A_2, sds[1]),
+            find(DotPatternDecoder.A_3, sds[2]), find(DotPatternDecoder.A_4, sds[3]),
         )
 
     @staticmethod
@@ -171,7 +82,9 @@ class DotPatternDecoder:
         sequence_a1 = sequence_p(a1, len(DotPatternDecoder.A_1))
         sequence_a2 = sequence_p(a2, len(DotPatternDecoder.A_2))
         sequence_a3 = sequence_p(a3, len(DotPatternDecoder.A_3))
-        sequence_a4 = sequence_p(a4, 241)
+
+        # + 1, ибо иначе не работает, а последовательности в 240 символов
+        sequence_a4 = sequence_p(a4, len(DotPatternDecoder.A_4) + 1)
 
         a1 = [next(sequence_a1), sequence_a1]
         a2 = [next(sequence_a2), sequence_a2]
@@ -228,4 +141,3 @@ direction_x, direction_y = DotPatternDecoder.directions2positions(direction_x, d
 direction_x = direction_x.transpose()
 
 print(DotPatternDecoder.decode_first_column(direction_x), DotPatternDecoder.decode_first_column(direction_y))
-# print(len(DotPatternDecoder.A_1), len(DotPatternDecoder.A_2), len(DotPatternDecoder.A_3), len(DotPatternDecoder.A_4))

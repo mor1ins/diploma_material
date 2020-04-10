@@ -1,6 +1,14 @@
 import numpy as np
 from dot_pattern_decoder import DotPatternDecoder
 
+
+def display(text):
+    print(text)
+
+
+from printer import Printer
+
+
 direction_x = np.array([
     [0, 0, -1, -1, 0, 0, 0, -1],
     [1, -1, 0, 0, 0, 0, 0, 1],

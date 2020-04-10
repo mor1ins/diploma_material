@@ -59,15 +59,15 @@ A_4 = [
 ]
 
 DIRECTIONS_TABLE = {
-    'Right': (-1, 0),
-    'Light': (1, 0),
+    'Left': (-1, 0),
+    'Right': (1, 0),
     'Up': (0, 1),
     'Down': (0, -1),
 }
 
 BITS_TABLE = {
-    'Right': (1, 0),
-    'Light': (0, 1),
+    'Left': (1, 0),
+    'Right': (0, 1),
     'Up': (0, 0),
     'Down': (1, 1),
 }

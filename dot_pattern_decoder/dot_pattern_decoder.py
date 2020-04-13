@@ -3,7 +3,7 @@ import os
 
 import cv2
 import numpy as np
-import constants
+from constants import Constants
 from skimage.measure import label, regionprops
 from helpers import sequence_p, transpose, find
 from PIL import Image, ImageFilter, ImageDraw
@@ -18,20 +18,20 @@ class Direction:
         self.min = coordinates.min(axis=1)
         self.difference = self.max - self.min
         self.threshold_for_class = 2 / 3 * self.difference.max()
-        self.classes_x = [
+        self.classes = [
             'A' if diff > self.threshold_for_class else 'B'
             for diff in self.difference]
 
     def zip_all(self):
-        return zip(self.average, self.max, self.min, self.difference, self.classes_x)
+        return zip(self.average, self.max, self.min, self.difference, self.classes)
 
 
 class DotPatternDecoder:
-    MNS = constants.MNS
-    A_1 = constants.A_1
-    A_2 = constants.A_2
-    A_3 = constants.A_3
-    A_4 = constants.A_4
+    MNS = Constants.MNS
+    A_1 = Constants.A_1
+    A_2 = Constants.A_2
+    A_3 = Constants.A_3
+    A_4 = Constants.A_4
 
     def __init__(self, path_to_image=None):
         if path_to_image is None or not (os.path.exists(path_to_image) and os.path.isfile(path_to_image)):
@@ -40,6 +40,7 @@ class DotPatternDecoder:
             self.raw_image = Image.open(path_to_image)
         self.image_grayscale = None
         self.deleted_noise_image = None
+        self.deleted_noise_image_with_centroids = None
         self.black_white_image = None
         self.centroids_image = None
         self.direction_x = None
@@ -89,7 +90,7 @@ class DotPatternDecoder:
             for j in range(len(codes[i])):
                 value = direction.coordinates[i, j]
                 interval = intervals[i]
-                possible_codes = [-1, 0, 1] if direction.classes_x[i] == 'A' else [-2, 2]
+                possible_codes = [-1, 0, 1] if direction.classes[i] == 'A' else [-2, 2]
                 codes[i, j] = self.get_position_code(value, interval, possible_codes)
 
         return codes
@@ -165,6 +166,7 @@ class DotPatternDecoder:
         centroids = self.get_centroids(self.deleted_noise_image)
         centroids_with_neighbours = self.make_dots_thick(centroids)
         centroids_zero_array = self.get_white_image_like(self.deleted_noise_image)
+        self.deleted_noise_image_with_centroids = self.points_to_image(self.deleted_noise_image, centroids_with_neighbours)
         self.centroids_image = self.points_to_image(centroids_zero_array, centroids_with_neighbours)
 
         # image_fft, fft_points = fft(raw_image.convert(mode='RGB'), 0.06)
@@ -180,7 +182,7 @@ class DotPatternDecoder:
 
     @staticmethod
     def dir2pos(x, y):
-        translations = constants.DIRECTIONS_TO_BITS_TRANSLATIONS
+        translations = Constants.DIRECTIONS_TO_BITS_TRANSLATIONS
         for direction, pos in translations.values():
             if direction == (x, y):
                 return pos

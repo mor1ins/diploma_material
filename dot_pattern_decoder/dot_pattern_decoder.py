@@ -7,7 +7,6 @@ from constants import Constants
 from skimage.measure import label, regionprops
 from helpers import sequence_p, transpose, find
 from PIL import Image, ImageFilter, ImageDraw
-from pathlib import Path
 
 
 class Direction:

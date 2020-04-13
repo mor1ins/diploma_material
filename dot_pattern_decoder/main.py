@@ -12,8 +12,10 @@ from printer import Printer
 decoder = DotPatternDecoder(Path.cwd().joinpath('../2020-04-08_22-00-09.jpg'))
 
 decoder.get_position_codes(decoder.preprocess_image())
+
 decoder.correction_position_2(decoder.x_codes, decoder.y_codes)
 decoder.correction_position_2(decoder.x_codes, decoder.x_codes)
+
 
 # lines_after_correction = correction_virtual_lines(average_x.copy(), classes_x, difference_x)
 # print(lines_after_correction)
